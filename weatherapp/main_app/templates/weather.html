@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Weather App</title>
+</head>
+<body>
+
+    <div class="search-bar">
+        <form method="post" action="/search">
+            <input id="input" type="text" name="keyword" placeholder="Enter City">
+            <button id="button" type="submit">Search</button>
+        </form>  
+    </div>
+
+
+    <div class="container-main">
+        <table class="city-weather-table">
+            <tr>
+                <td>
+                    {% for city_data in city_weather %}
+                    <div class="city-data">
+                        <h1>{{ city_data[0] }}</h1>
+                        <p>Temperature: {{ city_data[1] }}°C</p>
+                        <p>Feels Like: {{ city_data[3] }}°C</p>
+                        <p>Humidity: {{ city_data[5] }}%</p>
+                    </div>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for city_data in city_weather %}
+                    <div class="city-data">
+                        <img id="icon" src="http://openweathermap.org/img/w/{{ city_data[7] }}.png" alt="Weather Icon">
+                        <p>Weather: {{ city_data[2] }}</p>
+                        <p>Pressure: {{ city_data[4] }} Pa</p>
+                        <p>Wind: {{ city_data[6] }}m/s</p>
+                    </div>
+                    {% endfor %}
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+    
+
+    <div class="forecast-container">
+        {% for forecast_data in daily_forecast %}
+        <div class="forecast-widget">
+            <div class="widget-front">
+                <h2>{{ forecast_data[2] }}</h2>
+                <img src="http://openweathermap.org/img/w/{{ forecast_data[3] }}.png" alt="Weather Icon">
+                <p>{{ forecast_data[0] }} {{ forecast_data[1] }}</p>
+            </div>
+            <div class="widget-back">
+                <p>Max Temperature: {{ forecast_data[4] }}°C</p>
+                <p>Min Temperature: {{ forecast_data[5] }}°C</p>
+                <p>Pressure: {{ forecast_data[6] }} Pa</p>
+                <p>Wind: {{ forecast_data[7] }} m/s</p>
+                <p>Sunrise: {{ forecast_data[8] }}</p>
+                <p>Sunset: {{ forecast_data[9] }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+
+    <!-- <p id="clock">Loading...</p> -->
+    <div class="clock-container">
+        <p id="clock">Loading...</p>
+        <select id="timezone-select">
+            <option value="local">Local Time</option>
+            <option value="UTC">UTC</option>
+            <option value="America/New_York">New York (EDT)</option>
+            <option value="Europe/London">London (GMT)</option>
+            <option value="Asia/Tokyo">Tokyo (JST)</option>
+        </select>
+    </div>
+
+    <div class="container">
+        {% for city_data in default_city_weather %}
+        <div class="widget">
+            <h2>{{ city_data[0] }}</h2>
+            <p>{{ city_data[1] }}°C</p>
+            <p>{{ city_data[2] }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+    
+</body>
+</html>
