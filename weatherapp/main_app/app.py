@@ -23,4 +23,4 @@ def display_weather():
     return render_template('weather.html', default_city_weather=default_city_weather, city_weather=city_weather, daily_forecast=daily_forecast)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
